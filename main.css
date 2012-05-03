@@ -1,0 +1,10 @@
+.krinkle-wmfBugZillaPortal-overview td {
+	vertical-align: top;
+}
+
+.krinkle-wmfBugZillaPortal-overview-wm tr:nth-child(odd) {
+	background: #f2f2f2;
+}
+.krinkle-wmfBugZillaPortal-overview-wm tr:hover {
+	background: #fff;
+}

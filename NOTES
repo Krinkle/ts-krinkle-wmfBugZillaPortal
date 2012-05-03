@@ -1,0 +1,51 @@
+== BugZilla API ==
+BugZilla has an API to get Product information,
+however until 4.2 it only returns very basic information,
+in 4.2 versions, milestones was added to the output.
+
+ -> https://bugzilla.mozilla.org/655229
+
+So for now, we hardcode the array in the PHP file, instead of using the API.
+
+Current output on bugzilla.wikimedia.org (Bugzilla version 4.0.6; 2012-05-03)
+
+=== Request ===
+	method:Product.get
+	params:[{"ids":[1,3]}]
+=== Response ===
+[
+{
+    "internals": {
+        "defaultmilestone": "---",
+        "allows_unconfirmed": "1",
+        "votesperuser": "1000",
+        "name": "MediaWiki",
+        "classification_id": "1",
+        "maxvotesperbug": "1",
+        "description": "The wiki software itself -- most issues about how the wiki works should go here.",
+        "votestoconfirm": "1",
+        "isactive": "1",
+        "id": "2"
+    },
+    "name": "MediaWiki",
+    "id": 2,
+    "description": "The wiki software itself -- most issues about how the wiki works should go here."
+},
+{
+    "internals": {
+        "defaultmilestone": "---",
+        "allows_unconfirmed": "1",
+        "votesperuser": "1000",
+        "name": "Wikimedia",
+        "classification_id": "1",
+        "maxvotesperbug": "1",
+        "description": "Configuration issues and other issues specific to Wikimedia servers, Wikimedia websites (including Wikipedia, Wiktionary, Commons, and the MediaZilla bugtracker) and other Wikimedia specific things",
+        "votestoconfirm": "0",
+        "isactive": "1",
+        "id": "3"
+    },
+    "name": "Wikimedia",
+    "id": 3,
+    "description": "Configuration issues and other issues specific to Wikimedia servers, Wikimedia websites (including Wikipedia, Wiktionary, Commons, and the MediaZilla bugtracker) and other Wikimedia specific things"
+}
+]
