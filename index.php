@@ -16,7 +16,7 @@ require_once('/home/krinkle/common/InitTool.php'); // BaseTool
 $toolConfig = array(
 	'displayTitle'	=> 'wmfBugZillaPortal',
 	'simplePath'	=> '/wmfBugZillaPortal/',
-	'revisionId'	=> '0.1.2',
+	'revisionId'	=> '0.1.3',
 	'revisionDate'	=> '2012-05-03',
 	'styles' => array(
 		'main.css',
@@ -49,10 +49,12 @@ $bugZillaStuff = array(
 			'1.20-git',
 			'unspecified',
 		),
+		// re-used for mediawiki-extensions
 		'milestones' => array(
 			'1.18.0 release',
 			'1.18.x release',
 			'1.19.0 release',
+			'1.19.x release',
 			'1.20.0 release',
 		),
 	),
@@ -110,13 +112,24 @@ function wbpTrackingBugLinks( $bugID ) {
 	. ')';
 }
 
-$Tool->addOut( 'MediaWiki core', 'h2' );
+
+$Tool->addOut( '<small>'
+	. '<a href="#mediawiki-core">MediaWiki core</a>'
+	. ' <b>&bull;</b> '
+	. '<a href="#mediawiki-extensions">MediaWiki extensions</a>'
+	. ' <b>&bull;</b> '
+	. '<a href="#wmf">Wikimedia</a>'
+	. '</small><hr/>'
+);
+
+
+$Tool->addOut( 'MediaWiki core', 'h2', array( 'id' => 'mediawiki-core' ) );
 $html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview">'
 	. '<thead><tr><th>Version</th><th>Target Milestone</th></tr></thead>'
 	. '<tbody><tr>';
 
 // Versions
-$html .= '<td><p>Unresolved bugs new in a MediaWiki version</p><ul>';
+$html .= '<td><p>Bugs new in a MediaWiki version</p><ul>';
 foreach ( $bugZillaStuff['mediawiki']['versions'] as $mwVersion ) {
 	$html .= "<li>{$mwVersion} "
 	. wbpBuglistLinks(
@@ -132,7 +145,7 @@ foreach ( $bugZillaStuff['mediawiki']['versions'] as $mwVersion ) {
 $html .= '</ul></td>';
 
 // Milestones
-$html .= '<td><p>Unresolved tickets targetted for a MediaWiki milestone</p><ul>';
+$html .= '<td><p>Tickets targetted for a MediaWiki milestone</p><ul>';
 foreach ( $bugZillaStuff['mediawiki']['milestones'] as $mwMilestone ) {
 	$html .= "<li>{$mwMilestone} "
 	. wbpBuglistLinks(
@@ -151,8 +164,33 @@ $html .= '</tr></tbody></table>';
 
 $Tool->addOut( $html );
 
+$Tool->addOut( 'MediaWiki extensions', 'h2', array( 'id' => 'mediawiki-extensions' ) );
+$html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview">'
+	. '<thead><tr><th>Target Milestone</th></tr></thead>'
+	. '<tbody><tr>';
 
-$Tool->addOut( 'Wikimedia', 'h2' );
+// Milestones
+$html .= '<td><p>Tickets targetted for a MediaWiki milestone</p><ul>';
+foreach ( $bugZillaStuff['mediawiki']['milestones'] as $mwMilestone ) {
+	$html .= "<li>{$mwMilestone} "
+	. wbpBuglistLinks(
+		array(
+			'query_format' => 'advanced',
+			'product' => 'MediaWiki extensions',
+			'target_milestone' => $mwMilestone,
+		),
+		'Targetted for MediaWiki ' . $mwMilestone
+	)
+	. '</li>';
+}
+$html .= '</ul></td>';
+
+$html .= '</tr></tbody></table>';
+
+$Tool->addOut( $html );
+
+
+$Tool->addOut( 'Wikimedia', 'h2', array( 'id' => 'wmf' ) );
 $html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview krinkle-wmfBugZillaPortal-overview-wm">'
 	. '<thead><tr><th>Deployment milestone</th><th>MediaWiki core/extensions (tracking)</th></tr></thead>'
 	. '<tbody>';
