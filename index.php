@@ -116,9 +116,9 @@ function wbpTrackingBugLinks( $bugID ) {
 $Tool->addOut( '<small>'
 	. '<a href="#mediawiki-core">MediaWiki core</a>'
 	. ' <b>&bull;</b> '
-	. '<a href="#mediawiki-extensions">MediaWiki extensions</a>'
-	. ' <b>&bull;</b> '
 	. '<a href="#wmf">Wikimedia</a>'
+	. ' <b>&bull;</b> '
+	. '<a href="#mediawiki-extensions">MediaWiki extensions</a>'
 	. '</small><hr/>'
 );
 
@@ -164,31 +164,6 @@ $html .= '</tr></tbody></table>';
 
 $Tool->addOut( $html );
 
-$Tool->addOut( 'MediaWiki extensions', 'h2', array( 'id' => 'mediawiki-extensions' ) );
-$html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview">'
-	. '<thead><tr><th>Target Milestone</th></tr></thead>'
-	. '<tbody><tr>';
-
-// Milestones
-$html .= '<td><p>Tickets targetted for a MediaWiki milestone</p><ul>';
-foreach ( $bugZillaStuff['mediawiki']['milestones'] as $mwMilestone ) {
-	$html .= "<li>{$mwMilestone} "
-	. wbpBuglistLinks(
-		array(
-			'query_format' => 'advanced',
-			'product' => 'MediaWiki extensions',
-			'target_milestone' => $mwMilestone,
-		),
-		'Targetted for MediaWiki ' . $mwMilestone
-	)
-	. '</li>';
-}
-$html .= '</ul></td>';
-
-$html .= '</tr></tbody></table>';
-
-$Tool->addOut( $html );
-
 
 $Tool->addOut( 'Wikimedia', 'h2', array( 'id' => 'wmf' ) );
 $html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview krinkle-wmfBugZillaPortal-overview-wm">'
@@ -217,6 +192,31 @@ foreach ( $bugZillaStuff['wikimedia']['deployment'] as $wmDeploy => $mwTrackingB
 }
 
 $html .= '</tbody></table>';
+
+$Tool->addOut( $html );
+
+$Tool->addOut( 'MediaWiki extensions', 'h2', array( 'id' => 'mediawiki-extensions' ) );
+$html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview">'
+	. '<thead><tr><th>Target Milestone</th></tr></thead>'
+	. '<tbody><tr>';
+
+// Milestones
+$html .= '<td><p>Tickets targetted for a MediaWiki milestone</p><ul>';
+foreach ( $bugZillaStuff['mediawiki']['milestones'] as $mwMilestone ) {
+	$html .= "<li>{$mwMilestone} "
+	. wbpBuglistLinks(
+		array(
+			'query_format' => 'advanced',
+			'product' => 'MediaWiki extensions',
+			'target_milestone' => $mwMilestone,
+		),
+		'Targetted for MediaWiki ' . $mwMilestone
+	)
+	. '</li>';
+}
+$html .= '</ul></td>';
+
+$html .= '</tr></tbody></table>';
 
 $Tool->addOut( $html );
 
