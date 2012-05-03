@@ -16,7 +16,7 @@ require_once('/home/krinkle/common/InitTool.php'); // BaseTool
 $toolConfig = array(
 	'displayTitle'	=> 'wmfBugZillaPortal',
 	'simplePath'	=> '/wmfBugZillaPortal/',
-	'revisionId'	=> '0.1.3',
+	'revisionId'	=> '0.1.4',
 	'revisionDate'	=> '2012-05-03',
 	'styles' => array(
 		'main.css',
@@ -37,35 +37,42 @@ $Tool->doStartBodyWrapper();
 $bugZillaStuff = array(
 	'mediawiki' => array(
 		'versions' => array(
-			'1.18.0',
-			'1.18.1',
-			'1.18.2',
-			'1.18.3',
-			'1.19',
-			'1.19.0',
-			'1.19beta1',
-			'1.19beta2',
-			'1.19.0rc1',
 			'1.20-git',
+			'1.19.0rc1',
+			'1.19beta2',
+			'1.19beta1',
+			'1.19.0',
+			'1.19',
+			'1.18.3',
+			'1.18.2',
+			'1.18.1',
+			'1.17.4',
+			'1.17.3',
+			'1.17.2',
+			'1.17.1',
+			'1.17.0rc1',
+			'1.17.0beta1',
+			'1.17.0',
+			'1.17',
 			'unspecified',
 		),
 		// re-used for mediawiki-extensions
 		'milestones' => array(
-			'1.18.0 release',
-			'1.18.x release',
-			'1.19.0 release',
-			'1.19.x release',
 			'1.20.0 release',
+			'1.19.x release',
+			'1.19.0 release',
+			'1.18.x release',
+			'1.18.0 release',
 		),
 	),
 	'wikimedia' => array(
 		'deployment' => array(
 			// Map Wikimedia deployment milestones to the tracker bug for MediaWiki bugs
-			'1.18wmf1' => '29068',
-			'1.19wmf1' => '31217',
-			'1.20wmf1' => '36464',
-			'1.20wmf2' => '36465',
 			'1.20wmf3' => null,
+			'1.20wmf2' => '36465',
+			'1.20wmf1' => '36464',
+			'1.19wmf1' => '31217',
+			'1.18wmf1' => '29068',
 		),
 	),
 );
