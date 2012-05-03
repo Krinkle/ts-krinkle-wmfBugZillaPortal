@@ -16,8 +16,8 @@ require_once('/home/krinkle/common/InitTool.php'); // BaseTool
 $toolConfig = array(
 	'displayTitle'	=> 'wmfBugZillaPortal',
 	'simplePath'	=> '/wmfBugZillaPortal/',
-	'revisionId'	=> '0.0.1',
-	'revisionDate'	=> '2012-05-02',
+	'revisionId'	=> '0.1.2',
+	'revisionDate'	=> '2012-05-03',
 	'styles' => array(
 		'main.css',
 	),
@@ -118,40 +118,39 @@ $html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview">'
 // Versions
 $html .= '<td><p>Unresolved bugs new in a MediaWiki version</p><ul>';
 foreach ( $bugZillaStuff['mediawiki']['versions'] as $mwVersion ) {
-	$html .= '<li>' . Html::element( 'a', array(
-			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . http_build_query(array(
-				'query_format' => 'advanced',
-				'product' => 'MediaWiki',
-				'resolution' => '---',
-				'version' => $mwVersion,
-			)),
-			'target' => '_blank',
-			'title' => 'Unresolved bugs new in MediaWiki ' . $mwVersion
-		), $mwVersion
-	) . '</li>';
+	$html .= "<li>{$mwVersion} "
+	. wbpBuglistLinks(
+		array(
+			'query_format' => 'advanced',
+			'product' => 'MediaWiki',
+			'version' => $mwVersion,
+		),
+		'Bugs new in MediaWiki ' . $mwVersion
+	)
+	. '</li>';
 }
 $html .= '</ul></td>';
 
 // Milestones
 $html .= '<td><p>Unresolved tickets targetted for a MediaWiki milestone</p><ul>';
 foreach ( $bugZillaStuff['mediawiki']['milestones'] as $mwMilestone ) {
-	$html .= '<li>' . Html::element( 'a', array(
-			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . http_build_query(array(
-				'query_format' => 'advanced',
-				'product' => 'MediaWiki',
-				'resolution' => '---',
-				'target_milestone' => $mwMilestone,
-			)),
-			'target' => '_blank',
-			'title' => 'Unresolved tickets targetted for MediaWiki ' . $mwMilestone
-		), $mwMilestone
-	) . '</li>';
+	$html .= "<li>{$mwMilestone} "
+	. wbpBuglistLinks(
+		array(
+			'query_format' => 'advanced',
+			'product' => 'MediaWiki',
+			'target_milestone' => $mwMilestone,
+		),
+		'Targetted for MediaWiki ' . $mwMilestone
+	)
+	. '</li>';
 }
 $html .= '</ul></td>';
 
 $html .= '</tr></tbody></table>';
 
 $Tool->addOut( $html );
+
 
 $Tool->addOut( 'Wikimedia', 'h2' );
 $html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview krinkle-wmfBugZillaPortal-overview-wm">'
@@ -165,10 +164,7 @@ $html .= '<tr>'
 	. '</tr>';
 
 foreach ( $bugZillaStuff['wikimedia']['deployment'] as $wmDeploy => $mwTrackingBug ) {
-	$html .= '<tr>'
-	. '<td>'
-	. $wmDeploy
-	. ' '
+	$html .= "<tr><td>{$wmDeploy} "
 	. wbpBuglistLinks(
 		array(
 			'query_format' => 'advanced',
@@ -177,14 +173,8 @@ foreach ( $bugZillaStuff['wikimedia']['deployment'] as $wmDeploy => $mwTrackingB
 		),
 		'General tasks for ' . $wmDeploy
 	)
-	. '</td>'
-	. '<td>';
-
-	if ( $mwTrackingBug ) {
-		$html .= wbpTrackingBugLinks( $mwTrackingBug );
-	} else {
-		$html .= '<em>(no tracking bug yet)</em>';
-	}
+	. '</td><td>';
+	$html .= $mwTrackingBug ? wbpTrackingBugLinks( $mwTrackingBug ) : '<em>(no tracking bug yet)</em>';
 	$html .= '</td></tr>';
 }
 
