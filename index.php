@@ -152,7 +152,7 @@ foreach ( $bugZillaStuff['mediawiki']['versions'] as $mwVersion ) {
 $html .= '</ul></td>';
 
 // Milestones
-$html .= '<td><p>Tickets targetted for a MediaWiki milestone</p><ul>';
+$html .= '<td><p>Tickets targeted for a MediaWiki milestone</p><ul>';
 foreach ( $bugZillaStuff['mediawiki']['milestones'] as $mwMilestone ) {
 	$html .= "<li>{$mwMilestone} "
 	. wbpBuglistLinks(
@@ -161,7 +161,7 @@ foreach ( $bugZillaStuff['mediawiki']['milestones'] as $mwMilestone ) {
 			'product' => 'MediaWiki',
 			'target_milestone' => $mwMilestone,
 		),
-		'Targetted for MediaWiki ' . $mwMilestone
+		'Targeted for MediaWiki ' . $mwMilestone
 	)
 	. '</li>';
 }
@@ -208,7 +208,7 @@ $html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview">'
 	. '<tbody><tr>';
 
 // Milestones
-$html .= '<td><p>Tickets targetted for a MediaWiki milestone</p><ul>';
+$html .= '<td><p>Tickets targeted for a MediaWiki milestone</p><ul>';
 foreach ( $bugZillaStuff['mediawiki']['milestones'] as $mwMilestone ) {
 	$html .= "<li>{$mwMilestone} "
 	. wbpBuglistLinks(
@@ -217,7 +217,7 @@ foreach ( $bugZillaStuff['mediawiki']['milestones'] as $mwMilestone ) {
 			'product' => 'MediaWiki extensions',
 			'target_milestone' => $mwMilestone,
 		),
-		'Targetted for MediaWiki ' . $mwMilestone
+		'Targeted for MediaWiki ' . $mwMilestone
 	)
 	. '</li>';
 }
