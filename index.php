@@ -12,11 +12,8 @@
  * -------------------------------------------------
  */
 // BaseTool & Localization
-require_once( '/home/krinkle/common/InitTool.php' );
+require_once( '../ts-krinkle-basetool/InitTool.php' );
 require_once( KR_TSINT_START_INC );
-// Sandbox
-#require_once( '../ts-krinkle-basetool/InitTool.php' );
-#require_once( KR_TSINT_SANDBOX_START_INC );
 
 $I18N = new TsIntuition( 'general' );
 
@@ -257,4 +254,3 @@ $Tool->addOut( $html );
  * -------------------------------------------------
  */
 $Tool->flushMainOutput();
-
