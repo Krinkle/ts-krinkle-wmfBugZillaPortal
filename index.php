@@ -11,19 +11,29 @@
  * Configuration
  * -------------------------------------------------
  */
-require_once('/home/krinkle/common/InitTool.php'); // BaseTool
+// BaseTool & Localization
+require_once( '/home/krinkle/common/InitTool.php' );
+require_once( KR_TSINT_START_INC );
+// Sandbox
+#require_once( '../ts-krinkle-basetool/InitTool.php' );
+#require_once( KR_TSINT_SANDBOX_START_INC );
+
+$I18N = new TsIntuition( 'general' );
 
 $toolConfig = array(
 	'displayTitle'	=> 'wmfBugZillaPortal',
 	'simplePath'	=> '/wmfBugZillaPortal/',
-	'revisionId'	=> '0.1.4',
-	'revisionDate'	=> '2012-05-03',
+	'localBasePath' => __DIR__,
+	'revisionId'	=> '0.1.5',
+	'revisionDate'	=> '2012-05-05',
 	'styles' => array(
 		'main.css',
 	),
+	'I18N'			=> $I18N,
 );
 
-$Tool = BaseTool::newFromArray($toolConfig);
+$Tool = BaseTool::newFromArray( $toolConfig );
+$Tool->setSourceInfoGithub( 'Krinkle', 'ts-krinkle-wmfBugZillaPortal' );
 
 $Tool->doHtmlHead();
 $Tool->doStartBodyWrapper();
@@ -63,6 +73,7 @@ $bugZillaStuff = array(
 			'1.19.0 release',
 			'1.18.x release',
 			'1.18.0 release',
+			'Future release',
 		),
 	),
 	'wikimedia' => array(
@@ -84,14 +95,27 @@ function wbpBuglistLinks( $buglistQuery, $label ) {
 				'resolution' => '---',
 			) + $buglistQuery),
 			'target' => '_blank',
-			'title' => $label
+			'title' => "Unresolved bugs $label"
 		), 'unresolved'
 	)
+
+	. ' &bull; '
+	. Html::element( 'a', array(
+			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . http_build_query(array(
+				'resolution' => '---',
+				'keywords' => 'code-update-regression',
+				'keywords_type' => 'anywords',
+			) + $buglistQuery),
+			'target' => '_blank',
+			'title' => "Unresolved regressions $label"
+		), 'regr.'
+	)
+
 	. ' &bull; '
 	. Html::element( 'a', array(
 			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . http_build_query($buglistQuery),
 			'target' => '_blank',
-			'title' => $label
+			'title' => "All bugs $label"
 		), 'all'
 	)
 	. ')';
@@ -145,7 +169,7 @@ foreach ( $bugZillaStuff['mediawiki']['versions'] as $mwVersion ) {
 			'product' => 'MediaWiki',
 			'version' => $mwVersion,
 		),
-		'Bugs new in MediaWiki ' . $mwVersion
+		'new in MediaWiki ' . $mwVersion
 	)
 	. '</li>';
 }
@@ -161,7 +185,7 @@ foreach ( $bugZillaStuff['mediawiki']['milestones'] as $mwMilestone ) {
 			'product' => 'MediaWiki',
 			'target_milestone' => $mwMilestone,
 		),
-		'Targeted for MediaWiki ' . $mwMilestone
+		'targeted for MediaWiki ' . $mwMilestone
 	)
 	. '</li>';
 }
@@ -191,7 +215,7 @@ foreach ( $bugZillaStuff['wikimedia']['deployment'] as $wmDeploy => $mwTrackingB
 			'product' => 'Wikimedia',
 			'target_milestone' => "$wmDeploy deployment",
 		),
-		'General tasks for ' . $wmDeploy
+		'tasks for ' . $wmDeploy
 	)
 	. '</td><td>';
 	$html .= $mwTrackingBug ? wbpTrackingBugLinks( $mwTrackingBug ) : '<em>(no tracking bug yet)</em>';
@@ -217,7 +241,7 @@ foreach ( $bugZillaStuff['mediawiki']['milestones'] as $mwMilestone ) {
 			'product' => 'MediaWiki extensions',
 			'target_milestone' => $mwMilestone,
 		),
-		'Targeted for MediaWiki ' . $mwMilestone
+		'targeted for MediaWiki ' . $mwMilestone
 	)
 	. '</li>';
 }
