@@ -18,15 +18,15 @@ require_once( KR_TSINT_START_INC );
 $I18N = new TsIntuition( 'general' );
 
 $toolConfig = array(
-	'displayTitle'	=> 'wmfBugZillaPortal',
-	'simplePath'	=> '/wmfBugZillaPortal/',
-	'localBasePath' => __DIR__,
-	'revisionId'	=> '0.1.5',
-	'revisionDate'	=> '2012-05-05',
-	'styles' => array(
+	'displayTitle'     => 'wmfBugZillaPortal',
+	'remoteBasePath'   => $kgConf->getRemoteBase() . '/wmfBugZillaPortal/',
+	'localBasePath'    => __DIR__,
+	'revisionId'       => '0.1.5',
+	'revisionDate'     => '2012-05-05',
+	'I18N'             => $I18N,
+	'styles'           => array(
 		'main.css',
 	),
-	'I18N'			=> $I18N,
 );
 
 $Tool = BaseTool::newFromArray( $toolConfig );
