@@ -1,7 +1,7 @@
 <?php
 /**
  * wmfBugZillaPortal: Portal for Wikimedia's BugZilla
- * Created on June 2, 2012
+ * Created on May 2, 2012
  *
  * @author Timo Tijhof <krinklemail@gmail.com>, 2012
  * @license CC-BY-SA 3.0 Unported: creativecommons.org/licenses/by/3.0/
@@ -20,7 +20,6 @@ $I18N = new TsIntuition( 'general' );
 $toolConfig = array(
 	'displayTitle'     => 'wmfBugZillaPortal',
 	'remoteBasePath'   => $kgConf->getRemoteBase() . '/wmfBugZillaPortal/',
-	'localBasePath'    => __DIR__,
 	'revisionId'       => '0.1.5',
 	'revisionDate'     => '2012-05-05',
 	'I18N'             => $I18N,
@@ -30,7 +29,7 @@ $toolConfig = array(
 );
 
 $Tool = BaseTool::newFromArray( $toolConfig );
-$Tool->setSourceInfoGithub( 'Krinkle', 'ts-krinkle-wmfBugZillaPortal' );
+$Tool->setSourceInfoGithub( 'Krinkle', 'ts-krinkle-wmfBugZillaPortal', __DIR__ );
 
 $Tool->doHtmlHead();
 $Tool->doStartBodyWrapper();
@@ -76,7 +75,7 @@ $bugZillaStuff = array(
 	'wikimedia' => array(
 		'deployment' => array(
 			// Map Wikimedia deployment milestones to the tracker bug for MediaWiki bugs
-			'1.20wmf3' => null,
+			'1.20wmf3' => '36664',
 			'1.20wmf2' => '36465',
 			'1.20wmf1' => '36464',
 			'1.19wmf1' => '31217',
