@@ -18,7 +18,7 @@ require_once( KR_TSINT_START_INC );
 $toolConfig = array(
 	'displayTitle'     => 'wmfBugZillaPortal',
 	'remoteBasePath'   => $kgConf->getRemoteBase() . '/wmfBugZillaPortal/',
-	'revisionId'       => '0.1.7',
+	'revisionId'       => '0.1.8',
 	'revisionDate'     => '2012-05-09',
 	'styles'           => array(
 		'main.css',
