@@ -20,7 +20,7 @@ $I18N = new TsIntuition( 'general' );
 $toolConfig = array(
 	'displayTitle'     => 'wmfBugZillaPortal',
 	'remoteBasePath'   => $kgConf->getRemoteBase() . '/wmfBugZillaPortal/',
-	'revisionId'       => '0.1.6',
+	'revisionId'       => '0.1.7',
 	'revisionDate'     => '2012-05-09',
 	'I18N'             => $I18N,
 	'styles'           => array(
@@ -106,6 +106,20 @@ function wbpBuglistLinks( $buglistQuery, $label ) {
 			'target' => '_blank',
 			'title' => "Unresolved bugs $label"
 		), 'unresolved'
+	)
+
+	. ' &bull; '
+	. Html::element( 'a', array(
+			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . http_build_query(array(
+				'resolution' => array(
+					'FIXED',
+					'DUPLICATE',
+					'resolution',
+				),
+			) + $buglistQuery),
+			'target' => '_blank',
+			'title' => "Resolved bugs $label"
+		), 'fixed'
 	)
 
 	. ' &bull; '
