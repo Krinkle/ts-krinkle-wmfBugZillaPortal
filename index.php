@@ -97,24 +97,62 @@ $bugZillaStuff = array(
 	),
 );
 
+/**
+ * BugZilla uses foo=bar&foo=bar instead of foo[]=bar or foo[0]=bar
+ * for multi-values. So can't use http_build_query.
+ * Note: Ignores all array keys.
+ */
+function wbpSimpleQueryStr( $query ) {
+	$str = '';
+	foreach ( $query as $key => $val ) {
+		if ( $str != '' ) {
+			$str .= '&';
+		}
+		if ( is_array( $val ) ) {
+			$isFirst = false;
+			foreach ( $val as $k => $v ) {
+				$str .= $isFirst ? '' : '&';
+				$str .= urlencode( $key ) . '=' . urlencode( strval( $v ) );
+				$isFirst = false;
+			}
+		} else {
+			$str .= urlencode( $key ) . '=' . urlencode( $val );
+		}
+	}
+	return $str;
+}
+
+
 function wbpBuglistLinks( $buglistQuery, $label ) {
 	return  '('
 	. Html::element( 'a', array(
-			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . http_build_query(array(
+			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . wbpSimpleQueryStr(array(
 				'resolution' => '---',
 			) + $buglistQuery),
 			'target' => '_blank',
 			'title' => "Unresolved bugs $label"
-		), 'unresolved'
+		), 'open'
 	)
 
 	. ' &bull; '
 	. Html::element( 'a', array(
-			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . http_build_query(array(
+			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . wbpSimpleQueryStr(array(
+				'resolution' => '---',
+				'keywords' => 'code-update-regression',
+				'keywords_type' => 'anywords',
+			) + $buglistQuery),
+			'target' => '_blank',
+			'title' => "Unresolved regressions $label"
+		), 'open regr.'
+	)
+
+	. ' &bull; '
+	. Html::element( 'a', array(
+			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . wbpSimpleQueryStr(array(
 				'resolution' => array(
 					'FIXED',
 					'DUPLICATE',
-					'resolution',
+					'WORKSFORME',
 				),
 			) + $buglistQuery),
 			'target' => '_blank',
@@ -124,19 +162,7 @@ function wbpBuglistLinks( $buglistQuery, $label ) {
 
 	. ' &bull; '
 	. Html::element( 'a', array(
-			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . http_build_query(array(
-				'resolution' => '---',
-				'keywords' => 'code-update-regression',
-				'keywords_type' => 'anywords',
-			) + $buglistQuery),
-			'target' => '_blank',
-			'title' => "Unresolved regressions $label"
-		), 'regr.'
-	)
-
-	. ' &bull; '
-	. Html::element( 'a', array(
-			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . http_build_query($buglistQuery),
+			'href' => 'https://bugzilla.wikimedia.org/buglist.cgi?' . wbpSimpleQueryStr($buglistQuery),
 			'target' => '_blank',
 			'title' => "All bugs $label"
 		), 'all'
@@ -146,7 +172,7 @@ function wbpBuglistLinks( $buglistQuery, $label ) {
 
 function wbpTrackingBugLinks( $bugID ) {
 	return  Html::element( 'a', array(
-			'href' => 'https://bugzilla.wikimedia.org/show_bug.cgi?' . http_build_query(array(
+			'href' => 'https://bugzilla.wikimedia.org/show_bug.cgi?' . wbpSimpleQueryStr(array(
 				'id' => $bugID
 			)),
 			'target' => '_blank',
@@ -155,7 +181,7 @@ function wbpTrackingBugLinks( $bugID ) {
 	)
 	. ' ('
 	. Html::element( 'a', array(
-			'href' => 'https://bugzilla.wikimedia.org/showdependencytree.cgi?' . http_build_query(array(
+			'href' => 'https://bugzilla.wikimedia.org/showdependencytree.cgi?' . wbpSimpleQueryStr(array(
 				'id' => $bugID,
 				'hide_resolved' => 1,
 			)),
