@@ -15,14 +15,11 @@
 require_once( '../ts-krinkle-basetool/InitTool.php' );
 require_once( KR_TSINT_START_INC );
 
-$I18N = new TsIntuition( 'general' );
-
 $toolConfig = array(
 	'displayTitle'     => 'wmfBugZillaPortal',
 	'remoteBasePath'   => $kgConf->getRemoteBase() . '/wmfBugZillaPortal/',
 	'revisionId'       => '0.1.7',
 	'revisionDate'     => '2012-05-09',
-	'I18N'             => $I18N,
 	'styles'           => array(
 		'main.css',
 	),
