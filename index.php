@@ -20,8 +20,8 @@ $I18N = new TsIntuition( 'general' );
 $toolConfig = array(
 	'displayTitle'     => 'wmfBugZillaPortal',
 	'remoteBasePath'   => $kgConf->getRemoteBase() . '/wmfBugZillaPortal/',
-	'revisionId'       => '0.1.5',
-	'revisionDate'     => '2012-05-05',
+	'revisionId'       => '0.1.6',
+	'revisionDate'     => '2012-05-09',
 	'I18N'             => $I18N,
 	'styles'           => array(
 		'main.css',
@@ -62,13 +62,26 @@ $bugZillaStuff = array(
 			'1.17',
 			'unspecified',
 		),
-		// re-used for mediawiki-extensions
 		'milestones' => array(
 			'1.20.0 release',
 			'1.19.x release',
 			'1.19.0 release',
 			'1.18.x release',
 			'1.18.0 release',
+			'Future release',
+		),
+	),
+	'mediawiki-extensions' => array(
+		'versions' => array(
+			'master',
+			'REL1_19 branch',
+			'REL1_18 branch',
+			'unspecified',
+		),
+		'milestones' => array(
+			'MW 1.20 vesion',
+			'MW 1.19 version',
+			'MW 1.18 version',
 			'Future release',
 		),
 	),
@@ -150,6 +163,9 @@ $Tool->addOut( '<small>'
 );
 
 
+/**
+ * Section: MediaWiki core
+ */
 $Tool->addOut( 'MediaWiki core', 'h2', array( 'id' => 'mediawiki-core' ) );
 $html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview">'
 	. '<thead><tr><th>Version</th><th>Target Milestone</th></tr></thead>'
@@ -192,6 +208,9 @@ $html .= '</tr></tbody></table>';
 $Tool->addOut( $html );
 
 
+/**
+ * Section: Wikimedia
+ */
 $Tool->addOut( 'Wikimedia', 'h2', array( 'id' => 'wmf' ) );
 $html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview krinkle-wmfBugZillaPortal-overview-wm">'
 	. '<thead><tr><th>Deployment milestone</th><th>MediaWiki core/extensions (tracking)</th></tr></thead>'
@@ -222,14 +241,34 @@ $html .= '</tbody></table>';
 
 $Tool->addOut( $html );
 
+/**
+ * Section: MediaWiki extensions
+ */
+
 $Tool->addOut( 'MediaWiki extensions', 'h2', array( 'id' => 'mediawiki-extensions' ) );
 $html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview">'
-	. '<thead><tr><th>Target Milestone</th></tr></thead>'
+	. '<thead><tr><th>Version</th><th>Target Milestone</th></tr></thead>'
 	. '<tbody><tr>';
 
+// Versions
+$html .= '<td><p>Bugs new in a version</p><ul>';
+foreach ( $bugZillaStuff['mediawiki-extensions']['versions'] as $mwVersion ) {
+	$html .= "<li>{$mwVersion} "
+	. wbpBuglistLinks(
+		array(
+			'query_format' => 'advanced',
+			'product' => 'MediaWiki extensions',
+			'version' => $mwVersion,
+		),
+		'new in MediaWiki ' . $mwVersion
+	)
+	. '</li>';
+}
+$html .= '</ul></td>';
+
 // Milestones
-$html .= '<td><p>Tickets targeted for a MediaWiki milestone</p><ul>';
-foreach ( $bugZillaStuff['mediawiki']['milestones'] as $mwMilestone ) {
+$html .= '<td><p>Tickets targeted for a certain version</p><ul>';
+foreach ( $bugZillaStuff['mediawiki-extensions']['milestones'] as $mwMilestone ) {
 	$html .= "<li>{$mwMilestone} "
 	. wbpBuglistLinks(
 		array(
