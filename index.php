@@ -154,7 +154,7 @@ function wbpBuglistLinks( $buglistQuery, $label ) {
 			) + $buglistQuery),
 			'target' => '_blank',
 			'title' => "Resolved bugs $label"
-		), 'fixed'
+		), 'closed'
 	)
 
 	. ' &bull; '
