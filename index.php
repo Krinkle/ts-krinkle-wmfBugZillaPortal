@@ -85,6 +85,7 @@ $bugZillaStuff = array(
 	'wikimedia' => array(
 		'deployment' => array(
 			// Map Wikimedia deployment milestones to the tracker bug for MediaWiki bugs
+			'1.20wmf4' => '36974',
 			'1.20wmf3' => '36664',
 			'1.20wmf2' => '36465',
 			'1.20wmf1' => '36464',
