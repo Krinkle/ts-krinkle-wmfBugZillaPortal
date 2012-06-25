@@ -85,6 +85,8 @@ $bugZillaStuff = array(
 	'wikimedia' => array(
 		'deployment' => array(
 			// Map Wikimedia deployment milestones to the tracker bug for MediaWiki bugs
+			'1.20wmf7' => null,
+			'1.20wmf6' => null,
 			'1.20wmf5' => '37346',
 			'1.20wmf4' => '36974',
 			'1.20wmf3' => '36664',
@@ -272,7 +274,7 @@ foreach ( $bugZillaStuff['wikimedia']['deployment'] as $wmDeploy => $mwTrackingB
 		'tasks for ' . $wmDeploy
 	)
 	. '</td><td>';
-	$html .= $mwTrackingBug ? wbpTrackingBugLinks( $mwTrackingBug ) : '<em>(no tracking bug yet)</em>';
+	$html .= $mwTrackingBug ? wbpTrackingBugLinks( $mwTrackingBug ) : '<em>(no cross-product depenencies)</em>';
 	$html .= '</td></tr>';
 }
 
