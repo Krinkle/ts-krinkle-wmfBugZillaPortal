@@ -40,7 +40,8 @@ $Tool->doStartBodyWrapper();
 $bugZillaStuff = array(
 	'mediawiki' => array(
 		'versions' => array(
-			'1.20-git',
+			'1.21-git',
+			'1.20',
 			'1.19.0rc1',
 			'1.19beta2',
 			'1.19beta1',
@@ -60,6 +61,7 @@ $bugZillaStuff = array(
 			'unspecified',
 		),
 		'milestones' => array(
+			'1.21.0 release',
 			'1.20.0 release',
 			'1.19.x release',
 			'1.19.0 release',
@@ -67,6 +69,9 @@ $bugZillaStuff = array(
 			'1.18.0 release',
 			'Future release',
 		),
+	),
+	'wikimedia' => array(
+		'wmf-deployment' => '38865',
 	),
 	'mediawiki-extensions' => array(
 		'versions' => array(
@@ -80,23 +85,6 @@ $bugZillaStuff = array(
 			'MW 1.19 version',
 			'MW 1.18 version',
 			'Future release',
-		),
-	),
-	'wikimedia' => array(
-		'deployment' => array(
-			// Map Wikimedia deployment milestones to the tracker bug for MediaWiki bugs
-			'1.20wmf10' => '39515',
-			'1.20wmf9' => '38803',
-			'1.20wmf8' => null,
-			'1.20wmf7' => null,
-			'1.20wmf6' => null,
-			'1.20wmf5' => '37346',
-			'1.20wmf4' => '36974',
-			'1.20wmf3' => '36664',
-			'1.20wmf2' => '36465',
-			'1.20wmf1' => '36464',
-			'1.19wmf1' => '31217',
-			'1.18wmf1' => '29068',
 		),
 	),
 );
@@ -261,23 +249,20 @@ $html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview krinkle-wmfB
 	. '<tbody>';
 
 // Deployment
-$html .= '<tr>'
-	. '<td>General tasks in "Wikimedia" category for a deployment milestone</td>'
-	. '<td><p>Tickets in MediaWiki core/extensions<br> blocking this deployment</td>'
-	. '</tr>';
+$html .= '';
 
-foreach ( $bugZillaStuff['wikimedia']['deployment'] as $wmDeploy => $mwTrackingBug ) {
-	$html .= "<tr><td>{$wmDeploy} "
+foreach ( $bugZillaStuff['wikimedia'] as $wmVersion => $trackingBug ) {
+	$html .= "<tr><td>{$wmVersion} "
 	. wbpBuglistLinks(
 		array(
 			'query_format' => 'advanced',
 			'product' => 'Wikimedia',
-			'target_milestone' => "$wmDeploy deployment",
+			'version' => $wmVersion,
 		),
-		'tasks for ' . $wmDeploy
+		'tasks for ' . $wmVersion
 	)
 	. '</td><td>';
-	$html .= $mwTrackingBug ? wbpTrackingBugLinks( $mwTrackingBug ) : '<em>(no cross-product depenencies)</em>';
+	$html .= $trackingBug ? wbpTrackingBugLinks( $trackingBug ) : '<em>(cross-product tracking unavailable)</em>';
 	$html .= '</td></tr>';
 }
 
