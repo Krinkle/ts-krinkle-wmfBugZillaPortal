@@ -162,14 +162,14 @@ function wbpBuglistLinks( $buglistQuery, $label ) {
 	. ')';
 }
 
-function wbpTrackingBugLinks( $bugID ) {
+function wbpTrackingBugLinks( $bugID, $label = null ) {
 	return  Html::element( 'a', array(
 			'href' => 'https://bugzilla.wikimedia.org/show_bug.cgi?' . wbpSimpleQueryStr(array(
 				'id' => $bugID
 			)),
 			'target' => '_blank',
 			'title' => "bug $bugID"
-		), "bug $bugID"
+		), $label === null ? "bug $bugID" : $label
 	)
 	. ' ('
 	. Html::element( 'a', array(
@@ -245,7 +245,7 @@ $Tool->addOut( $html );
  */
 $Tool->addOut( 'Wikimedia', 'h2', array( 'id' => 'wmf' ) );
 $html = '<table class="wikitable krinkle-wmfBugZillaPortal-overview krinkle-wmfBugZillaPortal-overview-wm">'
-	. '<thead><tr><th>Deployment milestone</th><th>MediaWiki core/extensions (tracking)</th></tr></thead>'
+	. '<thead><tr><th>Issues</th><th>MediaWiki core/extensions (tracking)</th></tr></thead>'
 	. '<tbody>';
 
 // Deployment
@@ -262,7 +262,7 @@ foreach ( $bugZillaStuff['wikimedia'] as $wmVersion => $trackingBug ) {
 		'tasks for ' . $wmVersion
 	)
 	. '</td><td>';
-	$html .= $trackingBug ? wbpTrackingBugLinks( $trackingBug ) : '<em>(cross-product tracking unavailable)</em>';
+	$html .= $trackingBug ? wbpTrackingBugLinks( $trackingBug, 'next-deployment' ) : '<em>(cross-product tracking unavailable)</em>';
 	$html .= '</td></tr>';
 }
 
