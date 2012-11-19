@@ -62,6 +62,7 @@ $bugZillaStuff = array(
 		),
 		'milestones' => array(
 			'1.21.0 release',
+			'1.20.x release',
 			'1.20.0 release',
 			'1.19.x release',
 			'1.19.0 release',
