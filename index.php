@@ -82,6 +82,7 @@ $bugZillaStuff = array(
 			'unspecified',
 		),
 		'milestones' => array(
+			'MW 1.21 vesion',
 			'MW 1.20 vesion',
 			'MW 1.19 version',
 			'MW 1.18 version',
